@@ -1,0 +1,9 @@
+{
+	"serverUrl":"https://77.244.213.6:3000",
+	"startPageUrl":"https://office.shopfinance.ru",
+	"window":{
+		"width":800,
+		"height":600
+	},
+    "internalPhone":"987"
+}

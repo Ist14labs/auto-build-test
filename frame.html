@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRM</title>
+    <style> body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .fader {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        z-index: 999
+    }
+
+    .fader.hide {
+        display: none;
+    }
+
+    .preloader {
+        width: 0;
+        height: 0;
+        border-radius: 25px;
+        border-left: 25px solid #0057e7;
+        border-right: 25px solid #d62d20;
+        border-top: 25px solid #ffa700;
+        border-bottom: 25px solid #008744;
+        -webkit-animation: spin 2s infinite;
+    }
+
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    #content {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        position: absolute;
+    } </style>
+</head>
+<body>
+<div class="fader">
+    <div class="preloader"></div>
+</div>
+<webview id="content" src="xxxurl"></webview>
+<script> onload = ()=> {
+    const {ipcRenderer} = require('electron');
+    const webview = document.querySelector('webview');
+    const preloader = document.querySelector('.fader');
+    const loadstart = () => {
+        preloader.classList.remove('hide');
+    };
+    const loadstop = () => {
+        preloader.classList.add('hide');
+    };
+    webview.addEventListener('did-start-loading', loadstart);
+    webview.addEventListener('did-stop-loading', loadstop);
+    document.addEventListener('mousedown', function (e) {
+        if(e.button==1){
+            ipcRenderer.send('openDefaultWindow');
+        }
+    });
+    webview.addEventListener('new-window', function (e) {
+        ipcRenderer.send('openTargetWindow', e.url);
+    });
+    window.new_webhook = function (data) {
+        webview.executeJavaScript(`new_webhook(${JSON.stringify(data)})`)
+    }
+} </script>
+</body>
+</html>

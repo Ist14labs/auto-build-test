@@ -1,0 +1,28 @@
+{
+  "name": "CRM",
+  "version": "1.0.6b2",
+  "description": "Notifications for CRM",
+  "author": "UncleFeudors RnD",
+  "main": "main.js",
+  "dependencies": {
+    "electron-settings": "^3.1.1",
+    "socket.io-client": "1.5.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^19.24.1",
+    "electron": "^1.7.5"
+  },
+  "build": {
+    "appId": "CRM.notifications",
+    "mac": {
+      "category": "Office"
+    },
+    "nsis":{
+      "runAfterFinish":false
+    }
+  },
+  "scripts": {
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  }
+}
